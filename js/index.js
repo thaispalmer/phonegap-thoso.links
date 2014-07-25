@@ -73,7 +73,7 @@ var app = {
 			var data = $.parseJSON(result);
 			$('#listaurls').html('');
 			$.each(data,function(index,value) {
-				$('<li></li>').html('<a href="' + value.url + '" target="_blank">' + value.desc + '<small>' + value.url + '</small></a>').appendTo('#listaurls');
+				$('<li></li>').html('<a href="' + value.url + '" class="ext-link">' + value.desc + '<small>' + value.url + '</small></a>').appendTo('#listaurls');
 			});
 			$.ui.hideMask();
 		});
