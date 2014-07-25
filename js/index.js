@@ -56,7 +56,6 @@ var app = {
 	},
     
     abreLink: function(url) {
-        alert('lol');
         if (typeof navigator !== "undefined" && navigator.app) {
             navigator.app.loadUrl(url, {openExternal: true});
         }
