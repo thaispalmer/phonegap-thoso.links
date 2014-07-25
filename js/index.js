@@ -54,11 +54,9 @@ var app = {
 		$(".ext-link").click(function(event) {
 			event.preventDefault();
 			if (typeof navigator !== "undefined" && navigator.app) {
-				// Mobile device.
 				navigator.app.loadUrl(this.attr('href'), {openExternal: true});
 			} else {
-				// Possible web browser
-				window.open(this.attr('href'), "_blank");
+				window.open(this.attr('href'), "_system");
 			}
 		});
 
