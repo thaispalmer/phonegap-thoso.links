@@ -50,19 +50,18 @@ var app = {
 			event.preventDefault();
 			app.adicionaLink();
 		});
-		
-		$(".ext-link").click(function(event) {
-			event.preventDefault();
-			if (typeof navigator !== "undefined" && navigator.app) {
-				navigator.app.loadUrl(this.attr('href'), {openExternal: true});
-			} else {
-				window.open(this.attr('href'), "_system");
-			}
-		});
 
 		app.atualizaLinks();
 		
 	},
+    
+    abreLink: function(url) {
+        alert('lol');
+        if (typeof navigator !== "undefined" && navigator.app) {
+            navigator.app.loadUrl(url, {openExternal: true});
+        }
+        else window.open(url, "_system");
+    },
 		
 	atualizaLinks: function() {
 		$.ui.loadContent("#links");
@@ -71,7 +70,7 @@ var app = {
 			var data = $.parseJSON(result);
 			$('#listaurls').html('');
 			$.each(data,function(index,value) {
-				$('<li></li>').html('<a href="' + value.url + '" class="ext-link">' + value.desc + '<small>' + value.url + '</small></a>').appendTo('#listaurls');
+				$('<li></li>').html('<a href="#" onclick="app.abreLink(' + "'" + value.url + "'" + ')">' + value.desc + '<small>' + value.url + '</small></a>').appendTo('#listaurls');
 			});
 			$.ui.hideMask();
 		});
