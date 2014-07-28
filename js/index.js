@@ -19,6 +19,7 @@
 var app = {
 
 	urlservidor: 'https://st0rage.org/~thoso/links.php?fetch=1',
+	links: {},
 
 	// Application Constructor
 	initialize: function() {
@@ -64,21 +65,26 @@ var app = {
 		
 	atualizaLinks: function() {
 		$.ui.loadContent("#links");
-		$.ui.showMask();
+		$.ui.showMask("Buscando links...");
 		$.get(app.urlservidor,function(result) {
-			var data = $.parseJSON(result);
-			$('#listaurls').html('');
-			$.each(data,function(index,value) {
-				$('<li></li>').html('<a href="#" onclick="app.abreLink(' + "'" + value.url + "'" + ')">' + value.desc + '<small>' + value.url + '</small></a>').appendTo('#listaurls');
-			});
+			app.links = $.parseJSON(result);
+			$('#ordenar').removeClass('up').addClass('down');
+			app.mostraLinks();
 			$.ui.hideMask();
 		});
+	},
+	
+	mostraLinks: function() {
+		 $('#listaurls').html('');
+			$.each(app.links,function(index,value) {
+				$('<li></li>').html('<a href="#" onclick="app.abreLink(' + "'" + value.url + "'" + ')">' + value.desc + '<small>' + value.url + '</small></a>').appendTo('#listaurls');
+			});
 	},
 	
 	adicionaLink:function() {
 		if ($('#addlink input[name=desc]').val() == '') { $.ui.popup('Preencha o título'); return; }
 		else if ($('#addlink input[name=url]').val() == '') { $.ui.popup('Preencha a URL'); return; }
-		$.ui.showMask();
+		$.ui.showMask("Adicionando...");
 		$.post(app.urlservidor,$('#addlink').serialize(),function() {
 			$.ui.hideMask();
 			$.ui.popup('Link Adicionado!');
@@ -86,6 +92,14 @@ var app = {
 		});
 		$('#addlink input[name=desc]').val('');
 		$('#addlink input[name=url]').val('');
+	},
+	
+	ordenaLista:function() {
+		if ($('#ordenar').hasClass('down')) $('#ordenar').removeClass('down').addClass('up');
+		else if ($('#ordenar').hasClass('up')) $('#ordenar').removeClass('up').addClass('down');
+		app.links.reverse();
+		app.mostraLinks();
 	}
+
 	
 };
