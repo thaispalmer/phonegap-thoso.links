@@ -82,8 +82,7 @@ var app = {
 	},
 	
 	adicionaLink:function() {
-		if ($('#addlink input[name=desc]').val() == '') { $.ui.popup('Preencha o título'); return; }
-		else if ($('#addlink input[name=url]').val() == '') { $.ui.popup('Preencha a URL'); return; }
+		if ($('#addlink input[name=url]').val() == '') { $.ui.popup('Preencha a URL'); return; }
 		$.ui.showMask("Adicionando...");
 		$.post(app.urlservidor,$('#addlink').serialize(),function() {
 			$.ui.hideMask();
@@ -97,8 +96,10 @@ var app = {
 	ordenaLista:function() {
 		if ($('#ordenar').hasClass('down')) $('#ordenar').removeClass('down').addClass('up');
 		else if ($('#ordenar').hasClass('up')) $('#ordenar').removeClass('up').addClass('down');
+		$.ui.showMask("Ordenando...");
 		app.links.reverse();
 		app.mostraLinks();
+		$.ui.hideMask();
 	}
 
 	
